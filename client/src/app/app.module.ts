@@ -9,6 +9,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { NavModule } from './modules/nav/nav.module';
 import { RegisterModule } from './modules/register/register.module';
 import { HomeModule } from './modules/home/home.module';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TypesTreeModule } from './modules/types-tree/types-tree.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,11 +21,16 @@ import { HomeModule } from './modules/home/home.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     NgxSpinnerModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right'
+    }),
+    BsDropdownModule.forRoot(),
     NavModule,
     RegisterModule,
-    HomeModule
+    HomeModule,
+    TypesTreeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

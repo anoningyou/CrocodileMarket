@@ -1,0 +1,8 @@
+<div class="container-fluid d-flex flex-column ">
+    <ng-container *ngFor="let item of data">
+        <app-dropdown-tree-node 
+            [data]="item"
+            (dataChange)="onElementChange($event)">
+    </app-dropdown-tree-node>
+    </ng-container>
+</div>

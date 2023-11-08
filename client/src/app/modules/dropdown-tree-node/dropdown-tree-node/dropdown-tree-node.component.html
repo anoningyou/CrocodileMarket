@@ -1,0 +1,27 @@
+<div class="container-fluid d-flex flex-column"
+     *ngIf="!!data">
+    <div class="d-flex gap-1 mb-1 data-container">
+        <button class="btn btn-light  btn-collapse form-check-input"
+                *ngIf="!!data.children?.length"
+                (click)="onCollapseClick()">
+            <i class="fa fa-chevron-right" *ngIf="collapsed"></i>
+            <i class="fa fa-chevron-down" *ngIf="!collapsed"></i>
+        </button>
+        <label class="form-check-label ms-1 ">
+            <input class="form-check-input"
+                type="checkbox" 
+                [checked]="data.checked"
+                (change)="onCheckChange($event)">
+            {{data.name | nullReplacer: '------'}}
+        </label>
+    </div>
+    <div class="container-fluid d-flex flex-column ms-3"
+        *ngIf="!!data.children?.length && !collapsed">
+        <ng-container *ngFor="let item of data?.children">
+            <app-dropdown-tree-node 
+                [data]="item"
+                (dataChange)="onChildChange($event)">
+            </app-dropdown-tree-node>
+        </ng-container>
+    </div>
+</div>
