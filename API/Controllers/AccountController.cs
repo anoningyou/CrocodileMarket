@@ -19,7 +19,7 @@ public class AccountController : BaseApiController
         _uow = uow;
     }
 
-    [HttpPost("register")]
+    [HttpPost(nameof(Register))]
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
     {
         if (await _uow.UserRepository.AnyAsync(registerDto.UserName))
@@ -38,9 +38,24 @@ public class AccountController : BaseApiController
         await _uow.UserRepository.AddAsync(user);
         await _uow.Complete();
 
-        var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.UserName) };
-        ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
-        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+        var claims = new List<Claim> 
+        { 
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Name, user.UserName)
+        };
+
+        ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+         await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                new AuthenticationProperties
+                {
+                    IsPersistent = true,
+                    AllowRefresh = true,
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
+                }
+        );
 
         return new UserDto
         {
@@ -49,7 +64,7 @@ public class AccountController : BaseApiController
         };
     }
 
-    [HttpPost("login")]
+    [HttpPost(nameof(Login))]
     public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
     {
         var user = await _uow.UserRepository.GetUserByName(loginDto.Username);
@@ -65,17 +80,33 @@ public class AccountController : BaseApiController
             if (computeHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid passvord");
         }
 
-        var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.UserName) };
-        ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
-        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+        var claims = new List<Claim> 
+        { 
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Name, user.UserName)
+        };
+        
+        ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+         await HttpContext.SignInAsync(
+        CookieAuthenticationDefaults.AuthenticationScheme,
+        new ClaimsPrincipal(claimsIdentity),
+        new AuthenticationProperties
+        {
+            IsPersistent = true,
+            AllowRefresh = true,
+            ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
+        });
 
         return new UserDto
         {
+            Id = user.Id,
             UserName = user.UserName,
         };
     }
 
-    [HttpGet("logout")]
+    [Authorize]     
+    [HttpGet(nameof(Logout))]
     public async Task<ActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

@@ -6,4 +6,6 @@ public class AppUser : BaseEntity
     public byte[] PasswordHash { get; set; }
 
     public byte[] PasswordSalt { get; set; }
+
+    public virtual ICollection<SaleOffer> SaleOffers { get; set; }
 }

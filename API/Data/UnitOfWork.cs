@@ -15,6 +15,8 @@ namespace API.Data
 
         public IUserRepository UserRepository => new UserRepository(_context,_mapper);
 
+        public ISaleOffersRepository SaleOffersRepository => new SaleOffersRepository(_context,_mapper);
+
         public async Task<bool> Complete()
         {
             return await _context.SaveChangesAsync()>0;

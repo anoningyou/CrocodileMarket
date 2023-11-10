@@ -12,6 +12,8 @@ import { HomeModule } from './modules/home/home.module';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TypesTreeModule } from './modules/types-tree/types-tree.module';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginModule } from './modules/login/login.module';
+import { SaleOffersModule } from './modules/sale-offers/sale-offers.module';
 
 @NgModule({
   declarations: [
@@ -29,8 +31,10 @@ import { HttpClientModule } from '@angular/common/http';
     BsDropdownModule.forRoot(),
     NavModule,
     RegisterModule,
+    LoginModule,
     HomeModule,
-    TypesTreeModule
+    TypesTreeModule,
+    SaleOffersModule
   ],
   providers: [],
   bootstrap: [AppComponent]

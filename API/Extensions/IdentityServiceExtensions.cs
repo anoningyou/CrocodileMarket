@@ -3,13 +3,28 @@
 namespace API;
 
 public static class IdentityServiceExtensions
+{
+    public static IServiceCollection AddIdentityServices(this IServiceCollection services,
+     IConfiguration config)
     {
-        public static IServiceCollection AddIdentityServices(this IServiceCollection services,
-         IConfiguration config )
+
+        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options =>
         {
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options => options.LoginPath = "/login");
-            services.AddAuthorization();
-            return services;
-        } 
+            options.Events.OnRedirectToLogin = (context) =>
+            {
+                context.Response.StatusCode = 401;
+                return Task.CompletedTask;
+            };
+        });
+
+        services.AddAuthorization();
+
+        services.ConfigureApplicationCookie(options =>
+        {
+            options.Cookie.SameSite = SameSiteMode.None;
+        });
+
+        return services;
     }
+}

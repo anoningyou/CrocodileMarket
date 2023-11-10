@@ -15,5 +15,6 @@ public class AutoMapperProfiles : Profile
         CreateMap<RegisterDto, AppUser>().ReverseMap();
         CreateMap<UserDto, AppUser>().ReverseMap();
         CreateMap<LoginDto, AppUser>().ReverseMap();
+        CreateMap<SaleOfferDto, SaleOffer>().ReverseMap();
     }
 }

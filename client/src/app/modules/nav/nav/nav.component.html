@@ -5,14 +5,37 @@
           <li class="nav-item">
             <a class="nav-link" [routerLink]="'types'">Types tree</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" 
+              *ngIf="accountService.currentUser$ | async"
+              [routerLink]="'sale-offers'">
+              Sale offers
+            </a>
+          </li>
         </ul>
         <div class="d-flex f-ga gap-3">
-            <a class="btn btn-primary" type="button" [routerLink]="'register'" >
+          
+          <ng-container *ngIf="accountService.currentUser$ | async as user; else login ">
+            <p class="navbar-brand m-0 ">
+              {{user.userName}}
+            </p>
+            <button class="btn btn-primary"
+             type="button" 
+             (click)="logout()">
+                Logout
+            </button>
+          </ng-container>
+
+          <ng-template #login>
+            <a class="btn btn-primary" [routerLink]="'register'" >
                 Register
             </a>
-            <a type="button" class="btn btn-primary">
+            <a class="btn btn-primary" [routerLink]="'login'">
                 Login
             </a>
+          </ng-template>
+          
+            
         </div>
     </div>
   </nav>
