@@ -16,6 +16,8 @@ public static class IdentityServiceExtensions
                 context.Response.StatusCode = 401;
                 return Task.CompletedTask;
             };
+            options.Cookie.SameSite = SameSiteMode.None;
+            options.Cookie.HttpOnly = false;
         });
 
         services.AddAuthorization();

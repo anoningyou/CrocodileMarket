@@ -1,62 +1,60 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { BehaviorSubject, map, take } from 'rxjs';
 import { User } from '../models/user';
 import { HttpClient } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { BaseHttpService } from './base-http.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AccountService {
-  baseUrl = environment.apiUrl;
+export class AccountService extends BaseHttpService {
   private currentUserSource = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http: HttpClient) {
-    this.loadUser();
-
+  constructor(http: HttpClient,
+     private cookieService: CookieService) {
+      super(http, 'account');
    }
 
-  loadUser(): void {
-    const userStr = localStorage.getItem('user');
-    console.log(userStr)
-    if (userStr) {
-      const user: User = JSON.parse(userStr) as User;
-      this.currentUserSource.next(user);
+  loadUser() {
+    if (!!this.cookieService.get('.AspNetCore.Cookies')){
+      this.http.get<User>(`${this.rootUrl}getCurrentUser`, { withCredentials: true }).pipe(take(1)).subscribe({
+        next:(response: User) => {
+          this.setCurrentUser(response ?? null);
+        },
+        error: _ => {
+          this.setCurrentUser(null);
+        }
+      })
     }
+    else {
+      this.setCurrentUser(null);
+    } 
   }
 
   login(model: any){
-    return this.http.post<User>(`${this.baseUrl}account/login`,model, { withCredentials: true }).pipe(
+    return this.http.post<User>(`${this.rootUrl}login`,model, { withCredentials: true }).pipe(
       map((response: User) => {
-        const user = response;
-        if(user) {
-          this.setCurrentUser(user);
-        }
+        this.setCurrentUser(response ?? null);
       })
     )
   }
 
   logout() {
-    localStorage.removeItem('user');
-    this.currentUserSource.next(null);
-    this.http.get(`${this.baseUrl}account/logout`).subscribe( _ => {})
+    this.setCurrentUser(null);
+    this.http.get(`${this.rootUrl}logout`, { withCredentials: true }).subscribe( _ => {})
   }
 
-  setCurrentUser(user: User){
-    console.log(user)
-    localStorage.setItem('user',JSON.stringify(user));
-    this.currentUserSource.next(user);
-  }
-
-  register(model:any){
-    return this.http.post<User>(`${this.baseUrl}account/register`,model, { withCredentials: true }).pipe(
+  register(model: any){
+    return this.http.post<User>(`${this.rootUrl}register`,model, { withCredentials: true }).pipe(
       map((user: User) => {
-        console.log(user);
-        if(user) {
-          this.setCurrentUser(user);
-        }
+        this.setCurrentUser(user ?? null);
       })
     );
+  }
+
+  private setCurrentUser(user: User | null){
+    this.currentUserSource.next(user);
   }
 }

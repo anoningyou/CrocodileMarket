@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BaseHttpService } from './base-http.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { SaleOfferDto } from '../models/dto/sale-offer-dto';
 
 @Injectable({
@@ -19,4 +19,11 @@ export class SellersService extends BaseHttpService {
   add(model: SaleOfferDto) {
     return this.http.post<SaleOfferDto>(`${this.rootUrl}addSaleOffer`, model, { withCredentials: true });
   }
+
+  remove(id: string) {
+    const params = new HttpParams()
+        .set('id', id);
+    return this.http.delete<boolean>(`${this.rootUrl}removeSaleOffer`, { params, withCredentials: true });
+  }
+  
 }

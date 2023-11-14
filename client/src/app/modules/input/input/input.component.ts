@@ -8,6 +8,9 @@ import { ValueTypeEnum } from 'src/app/enums/value-type';
   styleUrls: ['./input.component.scss'],
 })
 export class InputComponent implements ControlValueAccessor, OnInit  {
+
+  //#region inputs
+
   @Input() label = '';
   @Input() type = 'text';
   @Input() valueType = ValueTypeEnum.Unknown;
@@ -15,17 +18,39 @@ export class InputComponent implements ControlValueAccessor, OnInit  {
   @Input() min: number | Date | null = null;
   @Input() max: number | Date | null = null;
 
+  //#endregion
+
+  //#region props
+
   valueTypeEnum: typeof ValueTypeEnum = ValueTypeEnum;
+
+  get control(): FormControl {
+    return this.ngControl.control as FormControl;
+  }
+
+  //#endregion
 
   constructor(@Self() public ngControl: NgControl) {
     this.ngControl.valueAccessor = this;
   }
 
+  //#region event handlers
+
   ngOnInit(): void {
     this.setControlType(this.valueType);
   }
 
-  setControlType(valueTypeEnum: string) {
+  writeValue(obj: any): void {}
+
+  registerOnChange(fn: any): void {}
+
+  registerOnTouched(fn: any): void {}
+
+  //#endregion
+
+  //#region private
+
+  private setControlType(valueTypeEnum: string) {
     switch (valueTypeEnum) {
       case ValueTypeEnum.Number:
         if (this.min === undefined || this.min === null || isNaN(+this.min))
@@ -45,18 +70,11 @@ export class InputComponent implements ControlValueAccessor, OnInit  {
         this.type = 'date';
         break;
       default:
-        this.type = 'text';
+        this.type = this.type ?? 'text';
         break;
     }
   }
 
-  writeValue(obj: any): void {}
-
-  registerOnChange(fn: any): void {}
-
-  registerOnTouched(fn: any): void {}
-
-  get control(): FormControl {
-    return this.ngControl.control as FormControl;
-  }
+  //#endregion
+  
 }

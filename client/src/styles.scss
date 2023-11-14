@@ -1,7 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import "./node_modules/bootswatch/dist/minty/variables";
+
 /* Importing Bootstrap SCSS file. */
 @import "./node_modules/bootstrap/scss/bootstrap";
 
+@import "./node_modules/bootswatch/dist/minty/bootswatch";
+
 /* Importing Datepicker SCSS file. */
 @import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+
+
+.form-medium {
+    max-width: 400px;
+}

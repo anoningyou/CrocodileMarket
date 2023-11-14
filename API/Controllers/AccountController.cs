@@ -4,7 +4,6 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Cryptography;
 using System.Text;
-using API.Data;
 using API.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -103,6 +102,21 @@ public class AccountController : BaseApiController
             Id = user.Id,
             UserName = user.UserName,
         };
+    }
+
+    [Authorize]     
+    [HttpGet(nameof(GetCurrentUser))]
+    public async Task<ActionResult<UserDto>> GetCurrentUser()
+    {
+        var user = User.GetUser();
+
+        if (user == null) 
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Unauthorized("Unauthorized");
+        }
+
+        return user;
     }
 
     [Authorize]     
