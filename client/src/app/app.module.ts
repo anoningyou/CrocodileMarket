@@ -30,11 +30,6 @@ import { SaleOffersModule } from './modules/sale-offers/sale-offers.module';
     }),
     BsDropdownModule.forRoot(),
     NavModule,
-    RegisterModule,
-    LoginModule,
-    HomeModule,
-    TypesTreeModule,
-    SaleOffersModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -25,5 +25,11 @@ export class SellersService extends BaseHttpService {
         .set('id', id);
     return this.http.delete<boolean>(`${this.rootUrl}removeSaleOffer`, { params, withCredentials: true });
   }
+
+  getSaleOffer(id: string) {
+    const params = new HttpParams()
+        .set('id', id);
+    return this.http.get<SaleOfferDto>(`${this.rootUrl}getSaleOffer`, { params, withCredentials: true });
+  }
   
 }

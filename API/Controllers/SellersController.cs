@@ -28,6 +28,12 @@ public class SellersController : BaseApiController
         return Ok(await _uow.SaleOffersRepository.GetAllAsync());
     }
 
+    [HttpGet(nameof(GetSaleOffer))]
+    public async Task<ActionResult<SaleOfferDto>> GetSaleOffer(Guid id)
+    {
+        return Ok(await _uow.SaleOffersRepository.GetByIdAsync(id));
+    }
+
     [HttpDelete(nameof(RemoveSaleOffer))]
     public async Task<ActionResult<bool>> RemoveSaleOffer(Guid id)
     {

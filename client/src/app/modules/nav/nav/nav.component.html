@@ -1,40 +1,46 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Crocodile market</a>
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link" [routerLink]="'types'">Types tree</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" 
-              *ngIf="accountService.currentUser$ | async"
-              [routerLink]="'sale-offers'">
-              Sale offers
-            </a>
-          </li>
-        </ul>
-        <div class="d-flex f-ga gap-3">
-          <ng-container *ngIf="accountService.currentUser$ | async as user; else login ">
-            <p class="navbar-brand m-0 ">
-              {{user.userName}}
-            </p>
-            <button class="btn btn-primary"
-             type="button" 
-             (click)="logout()">
-                Logout
-            </button>
-          </ng-container>
+  <div class="container-fluid">
+    <a class="navbar-brand"
+       href="#">Crocodile market</a>
+    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+      <li class="nav-item">
+        <a class="nav-link"
+           [routerLink]="'/types'"
+           routerLinkActive="active">Types tree</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"
+           *ngIf="accountService.currentUser$ | async"
+           [routerLink]="'/sale-offers'"
+           routerLinkActive="active">
+          Sale offers
+        </a>
+      </li>
+    </ul>
+    <div class="d-flex f-ga gap-3">
+      <ng-container *ngIf="accountService.currentUser$ | async as user; else login ">
+        <p class="navbar-brand m-0 ">
+          {{user.userName}}
+        </p>
+        <button class="btn btn-primary"
+                type="button"
+                (click)="logout()">
+          Logout
+        </button>
+      </ng-container>
 
-          <ng-template #login>
-            <a class="btn btn-primary" [routerLink]="'register'" >
-                Register
-            </a>
-            <a class="btn btn-primary" [routerLink]="'login'">
-                Login
-            </a>
-          </ng-template>
-          
-            
-        </div>
+      <ng-template #login>
+        <a class="btn btn-primary"
+           [routerLink]="'register'">
+          Register
+        </a>
+        <a class="btn btn-primary"
+           [routerLink]="'login'">
+          Login
+        </a>
+      </ng-template>
+
+
     </div>
-  </nav>
+  </div>
+</nav>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TypesTreeComponent } from './types-tree/types-tree.component';
+import { TypesTreeRoutingModule } from './types-tree-routing.module';
 import { DropdownTreeModule } from '../dropdown-tree/dropdown-tree.module';
 
 
@@ -11,6 +12,7 @@ import { DropdownTreeModule } from '../dropdown-tree/dropdown-tree.module';
   ],
   imports: [
     CommonModule,
+    TypesTreeRoutingModule,
     DropdownTreeModule
   ],
   exports: [

@@ -1,0 +1,42 @@
+<div *ngIf="!!offer()"
+     class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <p>Name</p>
+        </div>
+        <div class="col-sm-6">
+            <p>{{offer()?.name}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <p>Price</p>
+        </div>
+        <div class="col-sm-6">
+            <p>{{offer()?.price}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <p>Description</p>
+        </div>
+        <div class="col-sm-6">
+            <p>{{offer()?.description}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <a class="btn btn-primary w-100 py-2"
+               [routerLink]="['/sale-offers/offer', randomId() ]">
+                Random
+            </a>
+        </div>
+        <div class="col-sm-6">
+            <a class="btn btn-primary w-100 py-2"
+               [routerLink]="'/sale-offers'">
+                Back
+            </a>
+        </div>
+    </div>
+
+</div>

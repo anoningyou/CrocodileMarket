@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DropdownTreeNodeComponent } from './dropdown-tree-node/dropdown-tree-node.component';
-import { NullReplacerModule } from '../null-replacer/null-replacer.module';
+import { NullReplacerModule } from 'src/app/modules/_pipes/null-replacer/null-replacer.module';
 
 
 

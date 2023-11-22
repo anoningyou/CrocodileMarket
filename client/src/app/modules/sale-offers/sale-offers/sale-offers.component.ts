@@ -33,6 +33,7 @@ export class SaleOffersComponent implements OnInit {
     this.addForm = this.fb.group({
       name: ['',Validators.required],
       price: ['', [Validators.required]],
+      description: [''],
     });
   }
 

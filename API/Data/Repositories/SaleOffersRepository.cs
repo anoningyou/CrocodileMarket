@@ -48,4 +48,13 @@ public class SaleOffersRepository : ISaleOffersRepository
             .ProjectTo<SaleOfferDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
     }
+
+    public async Task<SaleOfferDto> GetByIdAsync(Guid id)
+    {
+        return await _context.SaleOffers
+            .AsNoTracking()
+            .ProjectTo<SaleOfferDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(s => s.Id == id);
+    }
+
 }

@@ -1,17 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './modules/home/home/home.component';
-import { RegisterComponent } from './modules/register/register/register.component';
-import { TypesTreeComponent } from './modules/types-tree/types-tree/types-tree.component';
-import { LoginComponent } from './modules/login/login/login.component';
-import { SaleOffersComponent } from './modules/sale-offers/sale-offers/sale-offers.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'register', component: RegisterComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'types', component: TypesTreeComponent},
-  {path: 'sale-offers', component: SaleOffersComponent},
+  {
+    path: '',
+    loadChildren: () => import('src/app/modules/home/home.module').then(x => x.HomeModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('src/app/modules/register/register.module').then(x => x.RegisterModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('src/app/modules/login/login.module').then(x => x.LoginModule)
+  },
+  {
+    path: 'types',
+    loadChildren: () => import('src/app/modules/types-tree/types-tree.module').then(x => x.TypesTreeModule)
+  },
+  {
+    path: 'sale-offers',
+    loadChildren: () => import('src/app/modules/sale-offers/sale-offers.module').then(x => x.SaleOffersModule)
+  },
 ];
 
 @NgModule({

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SaleOffersComponent } from './sale-offers/sale-offers.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputModule } from '../input/input.module';
+import { SaleOffersRoutingModule } from './sale-offers-routing.module';
 
 
 
@@ -12,6 +13,7 @@ import { InputModule } from '../input/input.module';
   ],
   imports: [
     CommonModule,
+    SaleOffersRoutingModule,
     InputModule,
     FormsModule,
     ReactiveFormsModule,

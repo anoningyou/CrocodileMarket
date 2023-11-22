@@ -1,52 +1,53 @@
-
 <div class="container">
-    <form [formGroup]="addForm" (ngSubmit)="addForm.valid && addOffer()" autocomplete="off">
+    <form [formGroup]="addForm"
+          (ngSubmit)="addForm.valid && addOffer()"
+          autocomplete="off">
         <div class="form-floating">
-            <app-input
-                [formControl]="$any(addForm.controls['name'])"
-                [label]="'Name'"
-            ></app-input>
+            <app-input [formControl]="$any(addForm.controls['name'])"
+                       [label]="'Name'"></app-input>
         </div>
         <div class="form-floating">
-            <app-input
-                [formControl]="$any(addForm.controls['price'])"
-                [valueType]="valueType.Decimal"
-                [min]="0"
-                [label]="'Price'"
-            ></app-input>
+            <app-input [formControl]="$any(addForm.controls['price'])"
+                       [valueType]="valueType.Decimal"
+                       [min]="0"
+                       [label]="'Price'"></app-input>
+        </div>
+        <div class="form-floating">
+            <app-input [formControl]="$any(addForm.controls['description'])"
+                       [label]="'Description'"></app-input>
         </div>
         <button class="btn btn-primary w-100 py-2"
-            type="submit"
-            [disabled]="!addForm.valid">
+                type="submit"
+                [disabled]="!addForm.valid">
             Add
         </button>
     </form>
-    <div class="container-fluid mt-3 " *ngIf="offers()">
+    <div class="container-fluid mt-3 "
+         *ngIf="offers()">
         <table class="table">
             <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Price</th>
-                <th scope="col"></th>
-              </tr>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col" class="actions"></th>
+                </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let offer of offers(); let i = index">
-                <th scope="row">{{i + 1}}</th>
-                <td>{{offer.name}}</td>
-                <td>{{offer.price}}</td>
-                <td>
-                    <button class="btn btn-danger" 
-                            type="button" 
-                            (click)="removeOffer(offer.id)">
-                        Delete
-                    </button>
-                </td>
-              </tr>
+                <tr class="table-row" *ngFor="let offer of offers(); let i = index">
+                    <th scope="row">{{i + 1}}</th>
+                    <td><a [routerLink]="['offer', offer.id ]">{{offer.name}}</a></td>
+                    <td>{{offer.price}}</td>
+                    <td>
+                        <button class="btn btn-danger delete-btn"
+                                type="button"
+                                (click)="removeOffer(offer.id)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
             </tbody>
-          </table>
+        </table>
     </div>
 
 </div>
-
