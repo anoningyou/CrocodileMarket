@@ -19,7 +19,7 @@ export class AccountService extends BaseHttpService {
 
   loadUser() {
     if (!!this.cookieService.get('.AspNetCore.Cookies')){
-      this.http.get<User>(`${this.rootUrl}getCurrentUser`, { withCredentials: true }).pipe(take(1)).subscribe({
+      this.http.get<User>(`${this.rootUrl}getCurrentUser`).pipe(take(1)).subscribe({
         next:(response: User) => {
           this.setCurrentUser(response ?? null);
         },
@@ -34,7 +34,7 @@ export class AccountService extends BaseHttpService {
   }
 
   login(model: any){
-    return this.http.post<User>(`${this.rootUrl}login`,model, { withCredentials: true }).pipe(
+    return this.http.post<User>(`${this.rootUrl}login`,model).pipe(
       map((response: User) => {
         this.setCurrentUser(response ?? null);
       })
@@ -43,11 +43,11 @@ export class AccountService extends BaseHttpService {
 
   logout() {
     this.setCurrentUser(null);
-    this.http.get(`${this.rootUrl}logout`, { withCredentials: true }).subscribe( _ => {})
+    this.http.get(`${this.rootUrl}logout`).subscribe( _ => {})
   }
 
   register(model: any){
-    return this.http.post<User>(`${this.rootUrl}register`,model, { withCredentials: true }).pipe(
+    return this.http.post<User>(`${this.rootUrl}register`, model).pipe(
       map((user: User) => {
         this.setCurrentUser(user ?? null);
       })

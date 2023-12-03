@@ -1,0 +1,23 @@
+<form [formGroup]="addForm"
+      (ngSubmit)="addForm.valid && safeOffer()"
+      autocomplete="off">
+    <div class="form-floating">
+        <app-input [formControl]="$any(addForm.controls['name'])"
+                   [label]="'Name'"></app-input>
+    </div>
+    <div class="form-floating">
+        <app-input [formControl]="$any(addForm.controls['price'])"
+                   [valueType]="valueType.Decimal"
+                   [min]="0"
+                   [label]="'Price'"></app-input>
+    </div>
+    <div class="form-floating">
+        <app-input [formControl]="$any(addForm.controls['description'])"
+                   [label]="'Description'"></app-input>
+    </div>
+    <button class="btn btn-primary w-100 py-2"
+            type="submit"
+            [disabled]="!addForm.valid">
+        {{!!data?.id ? 'Save' : 'Add'}}
+    </button>
+</form>

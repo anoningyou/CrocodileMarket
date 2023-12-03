@@ -1,0 +1,41 @@
+<div class="overlay"
+     (click)="outClick($event)"
+     (scroll)="onScroll($event)"
+     [ngClass]="{'window-on-top':showOnTop}"
+     #modalPopupContainer>
+
+  <div class="dialog"
+       #popupWindow
+       [style.width.px]="maxHeaderWidth">
+    <div class="dialog-overlay">
+      <div class="dialog-header d-flex justify-content-between"
+           [style.width.px]="maxHeaderWidth"
+           [class.fixed]="headerIsFixed"
+           #header>
+        <div class="dialog-header-text">{{caption}}</div>
+        <div class="content">
+          <ng-content select="[modal-header]">
+
+          </ng-content>
+        </div>
+        <div class="window-button"
+             *ngIf="!hiddenHeaderButtons">
+          <ng-content select="[header-buttons]">
+
+          </ng-content>
+          <button type="button"
+                  class="btn-close"
+                  aria-label="Close window"
+                  title="Close window"
+                  (click)="closeClick()"
+                  *ngIf="!hiddenCloseButton">
+          </button>
+        </div>
+      </div>
+      <div class="dialog-content">
+        <ng-content select="[modal-content]">
+        </ng-content>
+      </div>
+    </div>
+  </div>
+</div>

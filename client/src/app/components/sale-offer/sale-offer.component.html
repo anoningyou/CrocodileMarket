@@ -25,13 +25,19 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <a class="btn btn-primary w-100 py-2"
                [routerLink]="['/sale-offers/offer', randomId() ]">
                 Random
             </a>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
+            <button class="btn btn-primary w-100 py-2"
+                    (click)="onShowWindows()">
+                Buy
+            </button>
+        </div>
+        <div class="col-sm-4">
             <a class="btn btn-primary w-100 py-2"
                [routerLink]="'/sale-offers'">
                 Back
@@ -40,3 +46,9 @@
     </div>
 
 </div>
+
+<app-modal-by-directive [name]="offer()?.name"
+                        (dialogClosed)="closeDialog($event)"
+                        *window="showWindow">
+
+</app-modal-by-directive>

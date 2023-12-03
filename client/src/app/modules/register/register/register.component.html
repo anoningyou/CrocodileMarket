@@ -1,27 +1,24 @@
-<form   class="container form-medium"
-        [formGroup]="registerForm"
-        (ngSubmit)="registerForm.valid && register()"
-        autocomplete="off">
+<form class="container form-medium"
+      [formGroup]="registerForm"
+      (ngSubmit)="registerForm.valid && register()"
+      autocomplete="off">
     <h1 class="h3 mb-3 fw-normal">Please register</h1>
 
     <div class="form-floating">
-        <app-input
-            [formControl]="$any(registerForm.controls['userName'])"
-            [label]="'User name'">
+        <app-input [formControl]="$any(registerForm.controls['userName'])"
+                   [label]="'User name'">
         </app-input>
     </div>
     <div class="form-floating">
-        <app-input
-            [formControl]="$any(registerForm.controls['password'])"
-            [type]="'password'"
-            [label]="'Password'">
+        <app-input [formControl]="$any(registerForm.controls['password'])"
+                   [type]="'password'"
+                   [label]="'Password'">
         </app-input>
     </div>
     <div class="form-floating">
-        <app-input
-            [formControl]="$any(registerForm.controls['confirmPassword'])"
-            [type]="'password'"
-            [label]="'Confirm password'">
+        <app-input [formControl]="$any(registerForm.controls['confirmPassword'])"
+                   [type]="'password'"
+                   [label]="'Confirm password'">
         </app-input>
     </div>
 

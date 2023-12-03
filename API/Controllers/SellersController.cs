@@ -22,6 +22,20 @@ public class SellersController : BaseApiController
         return Ok(result);
     }
 
+    [HttpPost(nameof(EditOffer))]
+    public async Task<ActionResult<SaleOfferDto>> EditOffer(SaleOfferDto dto)
+    {
+        var result = await _uow.SaleOffersRepository.EditAsync(dto, User.GetUserId().Value);
+        await _uow.Complete();
+        return Ok(result);
+    }
+
+    [HttpGet(nameof(GetUserSales))]
+    public async Task<ActionResult<List<SaleOfferDto>>> GetUserSales()
+    {
+        return Ok(await _uow.SaleOffersRepository.GetUserSalesAsync(User.GetUserId().Value));
+    }
+
     [HttpGet(nameof(GetSaleOffers))]
     public async Task<ActionResult<List<SaleOfferDto>>> GetSaleOffers()
     {
@@ -37,7 +51,7 @@ public class SellersController : BaseApiController
     [HttpDelete(nameof(RemoveSaleOffer))]
     public async Task<ActionResult<bool>> RemoveSaleOffer(Guid id)
     {
-        var result = await _uow.SaleOffersRepository.RemoveAsync(id);
+        var result = await _uow.SaleOffersRepository.RemoveAsync(id, User.GetUserId().Value);
         await _uow.Complete();
         return Ok(result);
     }

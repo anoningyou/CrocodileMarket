@@ -1,0 +1,28 @@
+<app-modal-container (close)="onCloseClick()">
+  <div modal-header>
+    <h5 class="m-0">Are you shure?</h5>
+  </div>
+  <div class="container-fluid"
+       modal-content>
+    <div class="row">
+      <div class="col-sm-12">
+        <p>Do you want to buy {{name}}?</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-5">
+        <button class="btn btn-danger w-100 py-2"
+                (click)="onCloseClick()">
+          No
+        </button>
+      </div>
+      <div class="col-sm-5 offset-sm-2">
+        <button class="btn btn-success w-100 py-2"
+                (click)="onOkClick()">
+          Yes
+        </button>
+      </div>
+    </div>
+
+  </div>
+</app-modal-container>

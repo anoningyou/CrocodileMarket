@@ -28,17 +28,35 @@ public class SaleOffersRepository : ISaleOffersRepository
         return  _mapper.Map<SaleOfferDto>(entity);
     }
 
-    public async Task<bool> RemoveAsync(Guid id)
+    public async Task<SaleOfferDto> EditAsync(SaleOfferDto saleOffer, Guid userId)
+    {
+        if (saleOffer.Id == null)
+            throw new Exception("Id must be not null");
+
+        var entity = await _context.SaleOffers.FindAsync(saleOffer.Id.Value);
+
+        if (entity == null)
+            throw new Exception($"SaleOffer with Id = {saleOffer.Id} not found");
+
+        if (entity.UserId != userId)
+            throw new Exception($"SaleOffer with Id = {saleOffer.Id} not belongs to user with Id = {userId}");
+
+        _mapper.Map(saleOffer, entity);
+
+        return  _mapper.Map<SaleOfferDto>(entity);
+    }
+
+    public async Task<bool> RemoveAsync(Guid id, Guid userId)
     {
         var entity = await _context.SaleOffers.FindAsync(id);
         
-        if (entity != null)
+        if (entity != null && entity.UserId == userId)
         {
             _context.SaleOffers.Remove(entity);
             return true;
         }
         else 
-        return false;
+            return false;
     }
 
     public async Task<List<SaleOfferDto>> GetAllAsync()
@@ -57,4 +75,12 @@ public class SaleOffersRepository : ISaleOffersRepository
             .FirstOrDefaultAsync(s => s.Id == id);
     }
 
+    public async Task<List<SaleOfferDto>> GetUserSalesAsync(Guid userId)
+    {
+        return await _context.SaleOffers
+            .AsNoTracking()
+            .Where(s => s.UserId == userId)
+            .ProjectTo<SaleOfferDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
 }

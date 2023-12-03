@@ -1,0 +1,13 @@
+.actions {
+    width: 60px;
+}
+
+.delete-btn {
+    display: none;
+}
+
+.table-row:hover {
+    .delete-btn {
+        display: unset;
+    }
+}

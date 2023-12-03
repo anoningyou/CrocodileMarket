@@ -1,0 +1,26 @@
+<div class="overlay"
+     (click)="onOverlayClicked($event)">
+  <div class="dialog"
+       #dialog
+       (click)="onDialogClicked($event)"
+       [style.width]="dataModel.width"
+       [style.height]="dataModel.height">
+    <div class="dialog-overlay">
+      <div class="dialog-header d-flex justify-content-between">
+        <div class="dialog-header-text">
+          {{dataModel.title}}
+        </div>
+        <button type="button"
+                class="btn-close"
+                aria-label="Close window"
+                title="Close window"
+                (click)="onOverlayClicked($event)">
+        </button>
+      </div>
+      <div class="dialog-content">
+        <ng-template [appInsertion]>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

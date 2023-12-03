@@ -1,20 +1,18 @@
 <form class="container form-medium"
-        [formGroup]="loginForm"
-        (ngSubmit)="loginForm.valid && login()"
-        autocomplete="off">
+      [formGroup]="loginForm"
+      (ngSubmit)="loginForm.valid && login()"
+      autocomplete="off">
     <h1 class="h3 mb-3 fw-normal text-center">Please login</h1>
 
     <div class="form-floating">
-        <app-input
-            [formControl]="$any(loginForm.controls['userName'])"
-            [label]="'User name'">
+        <app-input [formControl]="$any(loginForm.controls['userName'])"
+                   [label]="'User name'">
         </app-input>
     </div>
     <div class="form-floating">
-        <app-input
-            [formControl]="$any(loginForm.controls['password'])"
-            [type]="'password'"
-            [label]="'Password'">
+        <app-input [formControl]="$any(loginForm.controls['password'])"
+                   [type]="'password'"
+                   [label]="'Password'">
         </app-input>
     </div>
     <button class="btn btn-primary w-100 py-2"
@@ -23,4 +21,3 @@
         Login
     </button>
 </form>
-

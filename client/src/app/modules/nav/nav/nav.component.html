@@ -6,7 +6,7 @@
       <li class="nav-item">
         <a class="nav-link"
            [routerLink]="'/types'"
-           routerLinkActive="active">Types tree</a>
+           routerLinkActive="active">Preferences</a>
       </li>
       <li class="nav-item">
         <a class="nav-link"
@@ -14,6 +14,14 @@
            [routerLink]="'/sale-offers'"
            routerLinkActive="active">
           Sale offers
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"
+           *ngIf="accountService.currentUser$ | async"
+           [routerLink]="'/my-sales'"
+           routerLinkActive="active">
+          My sales
         </a>
       </li>
     </ul>

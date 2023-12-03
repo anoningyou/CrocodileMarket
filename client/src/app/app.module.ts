@@ -7,13 +7,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ToastrModule } from 'ngx-toastr';
 import { NavModule } from './modules/nav/nav.module';
-import { RegisterModule } from './modules/register/register.module';
-import { HomeModule } from './modules/home/home.module';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { TypesTreeModule } from './modules/types-tree/types-tree.module';
-import { HttpClientModule } from '@angular/common/http';
-import { LoginModule } from './modules/login/login.module';
-import { SaleOffersModule } from './modules/sale-offers/sale-offers.module';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { CookieInterceptor } from './interceptors/cookie.interceptor';
+import { ErrorsInterceptor } from './interceptors/errors.interceptor';
+import { LoadingInterceptor } from './interceptors/loading.interceptor';
+import { WindowModule } from './modules/window/window.module';
 
 @NgModule({
   declarations: [
@@ -30,8 +29,13 @@ import { SaleOffersModule } from './modules/sale-offers/sale-offers.module';
     }),
     BsDropdownModule.forRoot(),
     NavModule,
+    WindowModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorsInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: CookieInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

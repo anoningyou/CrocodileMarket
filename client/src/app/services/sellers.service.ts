@@ -13,23 +13,31 @@ export class SellersService extends BaseHttpService {
   }
 
   getAll() {
-    return this.http.get<SaleOfferDto[]>(`${this.rootUrl}getSaleOffers`, { withCredentials: true });
+    return this.http.get<SaleOfferDto[]>(`${this.rootUrl}getSaleOffers`);
+  }
+
+  getUserSales() {
+    return this.http.get<SaleOfferDto[]>(`${this.rootUrl}getUserSales`);
   }
   
   add(model: SaleOfferDto) {
-    return this.http.post<SaleOfferDto>(`${this.rootUrl}addSaleOffer`, model, { withCredentials: true });
+    return this.http.post<SaleOfferDto>(`${this.rootUrl}addSaleOffer`, model);
+  }
+
+  edit(model: SaleOfferDto) {
+    return this.http.put<SaleOfferDto>(`${this.rootUrl}editOffer`, model);
   }
 
   remove(id: string) {
     const params = new HttpParams()
         .set('id', id);
-    return this.http.delete<boolean>(`${this.rootUrl}removeSaleOffer`, { params, withCredentials: true });
+    return this.http.delete<boolean>(`${this.rootUrl}removeSaleOffer`, { params });
   }
 
   getSaleOffer(id: string) {
     const params = new HttpParams()
         .set('id', id);
-    return this.http.get<SaleOfferDto>(`${this.rootUrl}getSaleOffer`, { params, withCredentials: true });
+    return this.http.get<SaleOfferDto>(`${this.rootUrl}getSaleOffer`, { params});
   }
   
 }
